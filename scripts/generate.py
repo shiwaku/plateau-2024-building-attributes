@@ -25,7 +25,7 @@ ROOT   = Path(__file__).parent.parent
 XLSX   = ROOT / "data" / "attributedata_2024_v4_r3.xlsx"
 N03    = Path("/mnt/c/Users/yshiw/Documents/GIS/digital/abr/address_all.csv/N03-20250101_GML/N03-20250101_dissolved.parquet")
 OUTPUT = ROOT / "output"
-HTML   = ROOT / "plateau_building_survey_map.html"
+HTML   = ROOT / "index.html"
 
 # --- 対象属性定義 ---
 SURVEY_BLDG = [
