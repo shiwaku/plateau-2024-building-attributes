@@ -253,9 +253,17 @@ body{{font-family:'Hiragino Sans','Meiryo',sans-serif;font-size:12px;}}
   position:absolute;top:10px;left:10px;
   background:rgba(255,255,255,0.96);padding:12px 14px;border-radius:8px;
   box-shadow:0 2px 10px rgba(0,0,0,0.25);width:270px;
-  max-height:calc(100vh - 20px);overflow-y:auto;z-index:1;
+  max-height:calc(100vh - 20px);overflow-y:auto;z-index:2;
+  transition:transform 0.25s ease;
 }}
 #panel h2{{font-size:12px;font-weight:bold;margin-bottom:8px;color:#1a1a2e;line-height:1.4;}}
+.panel-header{{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;}}
+#close-btn{{
+  flex-shrink:0;display:none;
+  background:none;border:none;cursor:pointer;
+  font-size:18px;line-height:1;color:#666;padding:0 2px;
+}}
+#close-btn:hover{{color:#333;}}
 .mode-btn{{display:flex;gap:4px;margin-bottom:10px;}}
 .mode-btn button{{flex:1;padding:5px 4px;font-size:11px;border:1px solid #ccc;border-radius:4px;cursor:pointer;background:#fff;}}
 .mode-btn button.active{{background:#2c6fad;color:#fff;border-color:#2c6fad;}}
@@ -274,12 +282,35 @@ body{{font-family:'Hiragino Sans','Meiryo',sans-serif;font-size:12px;}}
 .pop-item{{display:flex;align-items:center;gap:4px;font-size:11px;padding:1px 0;}}
 .dot{{width:8px;height:8px;border-radius:50%;flex-shrink:0;}}
 .has{{color:#1a6bb5;}}.no{{color:#bbb;}}
+#menu-btn{{
+  display:none;
+  position:absolute;top:10px;left:10px;z-index:3;
+  background:#2c6fad;color:#fff;border:none;border-radius:8px;
+  width:40px;height:40px;font-size:20px;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  align-items:center;justify-content:center;
+}}
+@media(max-width:600px){{
+  #panel{{
+    top:0;left:0;right:0;bottom:0;
+    width:100%;max-height:100%;
+    border-radius:0;
+    transform:translateX(-100%);
+  }}
+  #panel.open{{transform:translateX(0);}}
+  #close-btn{{display:block;}}
+  #menu-btn{{display:flex;}}
+}}
 </style>
 </head>
 <body>
 <div id="map"></div>
+<button id="menu-btn" onclick="openPanel()" aria-label="メニューを開く">☰</button>
 <div id="panel">
-  <h2>🏙️ PLATEAU 2024年度<br>建物利用現況調査 属性整備都市</h2>
+  <div class="panel-header">
+    <h2>🏙️ PLATEAU 2024年度<br>建物利用現況調査 属性整備都市</h2>
+    <button id="close-btn" onclick="closePanel()" aria-label="閉じる">✕</button>
+  </div>
   <div class="mode-btn">
     <button class="active" id="btn-filter" onclick="setMode('filter')">属性フィルター</button>
     <button id="btn-count" onclick="setMode('count')">保有属性数</button>
@@ -318,6 +349,9 @@ const LABELS = {json.dumps(labels, ensure_ascii=False)};
 const GEOM_TYPE = "{geom_type}";
 
 let mode = 'filter';
+
+function openPanel()  {{ document.getElementById('panel').classList.add('open');    document.getElementById('menu-btn').style.display='none'; }}
+function closePanel() {{ document.getElementById('panel').classList.remove('open'); document.getElementById('menu-btn').style.display='flex'; }}
 
 function initCheckboxes() {{
   ['bldg','uro'].forEach(ns => {{
