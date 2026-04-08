@@ -401,6 +401,7 @@ const map = new maplibregl.Map({{
   style: STYLES[0],
   center: [137.0, 36.5],
   zoom: 4.8,
+  hash: true,
 }});
 map.addControl(new maplibregl.NavigationControl(), 'bottom-right');
 
