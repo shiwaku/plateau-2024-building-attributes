@@ -1,0 +1,14 @@
+# Claude内部メモ
+CLAUDE.md
+
+# 関係のないファイル
+*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+.env
